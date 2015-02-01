@@ -1,0 +1,15 @@
+*.csv
+*.zip
+*.pyc
+
+
+*.aux
+*.bbl
+*.dvi
+*.out
+*.sty
+*.blg
+*.bst
+*.log
+*.gz
+*~
