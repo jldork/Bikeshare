@@ -23,12 +23,17 @@ trips <- aggregate_data(raw, output=paste0(raw,'aggregate_trips.RData'))
 #clean data and add variables
 trips <- clean_data(trips)
 
-save(trips, paste0(raw,'aggregate_trips_clean.RData'))
+save(trips, file=paste0(raw,'aggregate_trips_clean.RData'))
+
+load(paste0(raw,'aggregate_trips_clean.RData'))
 
 #print out general stats by year
 general_stats(trips, graph)
 
-#Average amount of time per trip
+general_stats_bytype(trips, graph)
+
+#histogram of average duration
+duration_hist(trips, graph)
 
 #Most popular destinations-station pairs
 
@@ -36,6 +41,6 @@ general_stats(trips, graph)
 
 #casual membership rides vs registered members
 
-#average lifespan of a bike
+#average lifespan of a bike - how old is the current fleet?
 
 #average speed a traveler travels from one place to another - google maps data needed for estimated routes

@@ -1,10 +1,58 @@
 \documentclass[12pt]{article}
 
+\usepackage{graphicx}%import graphics
+
+
 \begin{document}
 
-\title{Bikeshare Kaggle Data}
+\title{Bikeshare Data}
+
+\author{Thayer Adsit, Matthew Chen, Cindy Huynh, James Leung}
 
 \maketitle
+
+\section{Introduction}
+We look at general trends in the capital bikeshare system using both weather data provided by kaggle and bike usage microdata released by the capital bikeshare system. From the bikeshare microdata we can determine the general growth of the system. We also look at difference i usage patterns for registered and unregistered users of the system.
+
+With the weather data we are able to determine the effects of different weather variables on bikeshare demand over a two year period.
+
+Things to do would be to complete the list of question that we posed in the beginning of the exercise and possibly merge other datasets for further insight. An interesting comparison would be to compare this data to ones released by new york and their bike share system. Other questions posed during our coffee shop session are as follows:
+
+\begin{enumerate}
+	\item drunk biking around dc
+	\item specific trips that people are making
+	\item same route every day
+	\item revenues of bikeshare
+	\item average lifespan of a bike
+	\item average speed of a rider over trip
+\end{enumerate}
+
+
+\section{General Trends}
+
+
+\begin{minipage}{.5\textwidth}
+\includegraphics[scale=0.5]{../graphs/num_trips.pdf}
+\end{minipage}%
+\begin{minipage}{.5\textwidth}
+\includegraphics[scale=0.5]{../graphs/num_stations.pdf}
+\end{minipage}
+
+\begin{minipage}{.5\textwidth}
+\includegraphics[scale=0.5]{../graphs/avg_reg.pdf}
+\end{minipage}%
+\begin{minipage}{.5\textwidth}
+\includegraphics[scale=0.5]{../graphs/num_bikes.pdf}
+\end{minipage}
+
+\section{Membership Status Comparison}
+
+\begin{minipage}{.5\textwidth}
+\includegraphics[scale=0.5]{../graphs/avg_duration_bytype.pdf}
+\end{minipage}%
+\begin{minipage}{.5\textwidth}
+\includegraphics[scale=0.5]{../graphs/num_trips_bytype.pdf}
+\end{minipage}
 
 \section{OLS Regression Results}
 

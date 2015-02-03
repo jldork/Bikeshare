@@ -96,7 +96,6 @@ clean_data <- function(trips){
   #clean up parts of data
   trips$starttime <- parse_time(trips$startdate)
   trips$startdate <- as.Date(as.character(trips$startdate), "%m/%d/%Y")
-  trips$monthyear <- format(trips$startdate, "%m/%y")
   trips$duration <- parse_duration(trips$duration)
   trips$registered <- 1 - as.numeric(trips$type=='Casual') #dummy indicating if rider is a registered user
   trips$enddate <- NULL

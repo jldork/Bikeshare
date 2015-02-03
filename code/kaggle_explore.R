@@ -1,7 +1,7 @@
 rm(list=ls())
 
-proj_dir <- '~/Desktop/Dropbox/Projects/kaggle_bikeshare/'
-raw <- paste0(proj_dir, 'raw/')
+proj_dir <- '~/Desktop/Bikeshare/'
+raw <- paste0(proj_dir, 'Data/')
 src <- paste0(proj_dir, 'code/')
 tab <- paste0(proj_dir, 'tables/')
 graph <- paste0(proj_dir, 'graphs/')
@@ -41,5 +41,5 @@ ols1 <- subset(test, select=c('datetime','count'))
 ols1$count <- max(0,ols1$count)
 write.csv(ols1, file=paste0(sub,'ols1.csv'), row.names=F)
 
-#formatted_table <- stargazer(fit, title='OLS Regression')
-#cat(formatted_table, file=paste0(tab,'ols_reg.tex'))
+formatted_table <- stargazer(fit, title='OLS Regression')
+cat(formatted_table, file=paste0(tab,'ols_reg.tex'))
