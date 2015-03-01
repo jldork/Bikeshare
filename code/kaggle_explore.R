@@ -40,6 +40,30 @@ est <- summary(fit, robust=T)
 formatted_table <- stargazer(fit, title='Casual Riders')
 cat(formatted_table, file=paste0(tab,'ols_casual.tex'))
 
+#----------log transformed results
+
+#looking at all riders
+fit <- lm(log(count)~ factor(season) + holiday + workingday + factor(weather) + temp + atemp 
+          + humidity + windspeed, data=train)
+est <- summary(fit, robust=T)
+formatted_table <- stargazer(fit, title='All riders log')
+cat(formatted_table, file=paste0(tab,'ols_all_log.tex'))
+
+#looking at registered riders
+fit <- lm(registered~ factor(season) + holiday + workingday + factor(weather) + temp + atemp 
+          + humidity + windspeed, data=train)
+est <- summary(fit, robust=T)
+formatted_table <- stargazer(fit, title='Registered Riders Log')
+cat(formatted_table, file=paste0(tab,'ols_registered_log.tex'))
+
+#looking at casual riders
+fit <- lm(casual~ factor(season) + holiday + workingday + factor(weather) + temp + atemp 
+          + humidity + windspeed, data=train)
+est <- summary(fit, robust=T)
+formatted_table <- stargazer(fit, title='Casual Riders Log')
+cat(formatted_table, file=paste0(tab,'ols_casual_log.tex'))
+
+
 train$predicted <- predict(fit, train)
 
 test$count <- predict(fit, test)
