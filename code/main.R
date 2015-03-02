@@ -17,23 +17,33 @@ library(sqldf)
 library(ggplot2)
 library(zoo)
 
-#aggregate many csv files
-trips <- aggregate_data(raw, output=paste0(raw,'aggregate_trips.RData'))
+generate_date <- 0
 
-#clean data and add variables
-trips <- clean_data(trips)
-
-save(trips, file=paste0(raw,'aggregate_trips_clean.RData'))
+if(generate_date==1){
+  #aggregate many csv files
+  trips <- aggregate_data(raw, output=paste0(raw,'aggregate_trips.RData'))
+  
+  #clean data and add variables
+  trips <- clean_data(trips)
+  
+  save(trips, file=paste0(raw,'aggregate_trips_clean.RData'))
+  
+}
 
 load(paste0(raw,'aggregate_trips_clean.RData'))
+trips <- subset(trips, !is.na(trips$startdate))
 
 #print out general stats by year
-general_stats(trips, graph)
+#general_stats(trips, graph)
 
 general_stats_bytype(trips, graph)
 
 #histogram of average duration
-duration_hist(trips, graph)
+#duration_hist(trips, graph)
+
+freq_bytime(trips, graph)
+
+#riders by days of the week
 
 #Most popular destinations-station pairs
 

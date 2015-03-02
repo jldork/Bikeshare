@@ -60,19 +60,36 @@ general_stats_bytype <- function(trips, graph){
                group by month, registered')
   
   stats <- subset(stats,!is.na(month))
+  stats <- subset(stats, month<as.Date('2014-09-01'))#cut off to remove outlier
   stats$registered <- as.factor(stats$registered)
   g <- ggplot(stats, aes(x=month, y=num_trips, group=registered, colour=registered)) + geom_line()+
-    ggtitle('Number of Trips') + labs(x='month', y='Trips') + scale_y_continuous(labels = comma)
+    ggtitle('Number of Trips') + labs(x='Year', y='Trips') + scale_y_continuous(labels = comma)
   g <- common_format(g)
-  pdf(paste0(graph,'num_trips_bytype.pdf'))
+  pdf(paste0(graph,'num_trips_bytype.pdf'), width=14, height=7)
   plot(g)
   dev.off()
   
   g <- ggplot(stats, aes(x=month, y=avg_duration/60, group=registered, colour=registered)) + geom_line()+
-    ggtitle('Average Duration of Trip') + labs(x='month', y='Duration (Minutes)') + scale_y_continuous(labels = comma)
+    ggtitle('Average Duration of Trip') + labs(x='Year', y='Duration (Minutes)') + scale_y_continuous(labels = comma)
   g <- common_format(g)
-  pdf(paste0(graph,'avg_duration_bytype.pdf'))
+  pdf(paste0(graph,'avg_duration_bytype.pdf'), width=14, height=7)
   plot(g)
   dev.off()
   
+}
+
+
+#print stats about time of highest rides by rider type
+freq_bytime <- function(trips, graph){
+  trips$weekday <- weekdays(trips$startdate)
+  registered <- sqldf('select weekday, count(*) as rides from trips where registered==1 group by weekday')
+  casual <- sqldf('select weekday, count(*) as rides from trips where registered==0 group by weekday')
+  
+  pdf(paste0(graph, 'registered_weekday.pdf'))
+  pie(registered$rides, labels=registered$weekday, main="Registered Rides by Weekday")
+  dev.off()
+  
+  pdf(paste0(graph, 'casual_weekday.pdf'))
+  pie(casual$rides, labels=casual$weekday, main="Casual Rides by Weekday")
+  dev.off()
 }
