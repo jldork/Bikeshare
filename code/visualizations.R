@@ -61,16 +61,18 @@ general_stats_bytype <- function(trips, graph){
   
   stats <- subset(stats,!is.na(month))
   stats <- subset(stats, month<as.Date('2014-09-01'))#cut off to remove outlier
-  stats$registered <- as.factor(stats$registered)
+  stats$registered <- factor(stats$registered, levels=c(0,1), labels=c('Casual','Registered'))
   g <- ggplot(stats, aes(x=month, y=num_trips, group=registered, colour=registered)) + geom_line()+
-    ggtitle('Number of Trips') + labs(x='Year', y='Trips') + scale_y_continuous(labels = comma)
+    ggtitle('Number of Trips') + labs(x='Year', y='Trips') + scale_y_continuous(labels = comma)+
+    theme(legend.title=element_blank())
   g <- common_format(g)
   pdf(paste0(graph,'num_trips_bytype.pdf'), width=14, height=7)
   plot(g)
   dev.off()
   
   g <- ggplot(stats, aes(x=month, y=avg_duration/60, group=registered, colour=registered)) + geom_line()+
-    ggtitle('Average Duration of Trip') + labs(x='Year', y='Duration (Minutes)') + scale_y_continuous(labels = comma)
+    ggtitle('Average Duration of Trip') + labs(x='Year', y='Duration (Minutes)') + scale_y_continuous(labels = comma)+
+    theme(legend.title=element_blank())
   g <- common_format(g)
   pdf(paste0(graph,'avg_duration_bytype.pdf'), width=14, height=7)
   plot(g)
@@ -85,11 +87,13 @@ freq_bytime <- function(trips, graph){
   registered <- sqldf('select weekday, count(*) as rides from trips where registered==1 group by weekday')
   casual <- sqldf('select weekday, count(*) as rides from trips where registered==0 group by weekday')
   
+  prct <- registered$rides/sum(registered$rides)
   pdf(paste0(graph, 'registered_weekday.pdf'))
-  pie(registered$rides, labels=registered$weekday, main="Registered Rides by Weekday")
+  pie(registered$rides, labels=paste(registered$weekday,percent(prct)), main="Registered Rides by Weekday")
   dev.off()
   
+  prct <- casual$rides/sum(casual$rides)
   pdf(paste0(graph, 'casual_weekday.pdf'))
-  pie(casual$rides, labels=casual$weekday, main="Casual Rides by Weekday")
+  pie(casual$rides, labels=paste(casual$weekday, percent(prct)), main="Casual Rides by Weekday")
   dev.off()
 }
